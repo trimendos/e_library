@@ -1,0 +1,19 @@
+<html>
+    <head>
+        {% if title %}
+            <title>{{title}} - e-library</title>
+        {% else %}
+            <title>e-library</title>
+        {% endif %}
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="static/js/search.js"> </script>
+
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+        <link href="static/css/jumbotron-narrow.css" rel="stylesheet">
+
+  </head>
+  <body>
+   {% block content %}{% endblock %}
+  </body>
+</html>

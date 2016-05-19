@@ -1,7 +1,7 @@
 from app import app
 from forms import SearchForm
 from flask import render_template, flash, redirect, session, url_for, request, g
-from models import Author
+from models import Author, Book
 
 
 @app.route('/')
@@ -11,21 +11,12 @@ def index():
     return render_template('index.html', title='Home', search_form=search_form)
 
 
-@app.route('/search', methods = ['POST'])
-# @login_required
-def search():
-    if not search_form.validate_on_submit():
-        return redirect(url_for('index'))
-    return redirect(url_for('search_results'))#, query=search_form.search.data))
-
-
 @app.route('/signUp')
 def signUp():
     return render_template('signUp.html')
 
 
 import json
-
 
 @app.route('/signUpUser', methods=['POST'])
 def signUpUser():
@@ -36,6 +27,23 @@ def signUpUser():
 
 @app.route('/searchResult', methods=['POST'])
 def searchResult():
-    search = request.form['search']
-    data_from_db = """<h4>Subheading</h4><p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>"""
-    return json.dumps({'status': 'OK', 'search': search, "data_from_db": data_from_db})
+    form = SearchForm(request.form)
+    key_word = request.form['search']
+    search_type = request.form['search_type']
+    if request.method == 'POST' and form.validate():
+        books = False
+        if search_type == 'book':
+            books = Book.query.filter(Book.title.like("%{0}%".format(key_word))).all()
+            data = [{'title': book.title,
+                     'authors': [author.name for author in book.authors] if book.authors else []} for book in books]
+
+        elif search_type == 'author':
+            books = Author.query.filter(Author.name.like("%{0}%".format(key_word))).all()
+            data = [{'name': i.name,
+                     'books': [book.title for book in i.books] if i.books else []} for i in books]
+
+        if books:
+            return json.dumps({'search_type': search_type, 'data': data})
+
+        return json.dumps({'message': 'No matches found'})
+    return jsonify({'status': 'Error'})

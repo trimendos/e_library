@@ -8,7 +8,6 @@
           <ul class="nav nav-pills pull-right">
             <li role="presentation" class="active"><a href="{{ url_for('index') }}">Home</a></li>
             <li role="presentation"><a href="/admin">Sign in</a></li>
-<!--            <li role="presentation"><a href="#">Contact</a></li>-->
           </ul>
         </nav>
         <h3 class="text-muted">E-library</h3>
@@ -16,25 +15,13 @@
 
       <div class="jumbotron">
         <h1>Go!</h1>
-        <form class="form-signin" action="/signUp" method="post" role="form">
+        <form method="post" role="form">
             {{search_form.hidden_tag()}}
-
             <input type="text" name="search" class="form-control" id="search" size="50" required autofocus><br>
 
-            {# <!--{% macro input(name='search', type='text', size=50, class="form-control", required=True, autofocus=True) -%}-->
-                <!--<input type="{{ type }}" name="{{ name }}" size="{{ size }}" class="">-->
-                        <!--{{ caller() }}-->
-            <!--{%- endmacro %}-->
-            <!--{% call input(') %}-->
-            <!--{% endcall %}--> #}
+            <ul class="errors">
+            </ul>
 
-            <!--<div class="btn-group">-->
-                <!--<button class="btn dropdown-toggle" data-toggle="dropdown">Author<span class="caret"></span></button>-->
-                <!--<ul class="dropdown-menu">-->
-                    <!--<li><a class="search-param" param="1" id="action-1">Author</a></li>-->
-                    <!--<li><a class="search-param" param="2" id="action-2">Book</a></li>-->
-                <!--</ul>-->
-            <!--</div>&lt;!&ndash; /btn-group &ndash;&gt;-->
             {{search_form.search_type}}
             <button class="btn btn-lg btn-success" type="button" id="start">Search </button>
         </form>

@@ -1,3 +1,5 @@
+import json
+
 from app import app
 from forms import SearchForm
 from flask import render_template, flash, redirect, session, url_for, request, g
@@ -9,20 +11,6 @@ from models import Author, Book
 def index():
     search_form = SearchForm()
     return render_template('index.html', title='Home', search_form=search_form)
-
-
-@app.route('/signUp')
-def signUp():
-    return render_template('signUp.html')
-
-
-import json
-
-@app.route('/signUpUser', methods=['POST'])
-def signUpUser():
-    user = request.form['username']
-    password = request.form['password']
-    return json.dumps({'status': 'OK', 'user': user, 'pass': password})
 
 
 @app.route('/searchResult', methods=['POST'])
@@ -46,4 +34,4 @@ def searchResult():
             return json.dumps({'search_type': search_type, 'data': data})
 
         return json.dumps({'message': 'No matches found'})
-    return jsonify({'status': 'Error'})
+    return json.dumps({'errors': form.errors})

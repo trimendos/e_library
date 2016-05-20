@@ -2,7 +2,7 @@ import json
 
 from app import app
 from forms import SearchForm
-from flask import render_template, flash, redirect, session, url_for, request, g
+from flask import render_template, request
 from models import Author, Book
 
 

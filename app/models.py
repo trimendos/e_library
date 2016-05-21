@@ -1,4 +1,4 @@
-from app import db, app
+from app import db
 
 ROLES = {'user': 0,
          'admin': 1}
@@ -16,6 +16,13 @@ class Author(db.Model):
     name = db.Column(db.String(120))
     books = db.relationship('Book', secondary=association_table, back_populates="authors")
 
+    def __init__(self, name=None, books=[]):
+        self.name = name
+        self.books = books
+
+    def __str__(self):
+        return '%s' % self.name
+
 
 class Book(db.Model):
     __tablename__ = 'books'
@@ -23,6 +30,13 @@ class Book(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120))
     authors = db.relationship('Author', secondary=association_table, back_populates="books")
+
+    def __init__(self, title=None, authors=[]):
+        self.title = title
+        self.authors = authors
+
+    def __str__(self):
+        return '%s' % self.title
 
 
 class User(db.Model):

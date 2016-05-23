@@ -2,7 +2,7 @@ blinker==1.4
 decorator==4.0.9
 Flask==0.10.1
 Flask-SQLAlchemy==2.1
-Flask-SuperAdmin==1.7.1
+Flask-Admin==1.4.0
 Flask-WhooshAlchemy==0.56
 flask-whooshee==0.2.0
 Flask-WTF==0.12

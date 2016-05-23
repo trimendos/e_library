@@ -1,20 +1,23 @@
 # import logging
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask.ext.superadmin import Admin, model
 
+# flask-admin
+from flask.ext.admin import Admin
+from flask_admin.contrib.sqla import ModelView
 
 app = Flask(__name__)
-admin = Admin(app, 'Simple Models')
+
+# flask-admin
+admin = Admin(app)
 
 app.config.from_object('config')
 db = SQLAlchemy(app)
 
 from app import views, models
 
-admin.register(models.Author, session=db.session)
-admin.register(models.Book, session=db.session)
-# admin.register(User, session=db.session)
+admin.add_view(ModelView(models.Author, session=db.session))
+admin.add_view(ModelView(models.Book, session=db.session))
 
 # logging.basicConfig()
 # logging.getLogger('sql    alchemy.engine').setLevel(logging.INFO)
